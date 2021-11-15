@@ -1,0 +1,24 @@
+.result{
+    width: 50%;
+    background-color: rgba(160, 151, 151, 0.5);
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+.reset{
+    padding: 10px 30px;
+    font-size: 24px;
+    cursor: pointer;
+	border-radius: 7px;
+	background-color: #299CA4;
+	color: #fff;
+	transition: all 0.3s;
+    margin: 10px;
+}
+
+.reset:hover{
+    border-radius: 0px;
+    color: #53488d;
+    background-color: #ffe5e5;
+}

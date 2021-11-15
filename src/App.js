@@ -1,11 +1,16 @@
 import Home from './pages/Home';
+import { ShipContextProvider } from './context/ShipContext';
 
 import './App.css';
+import Sidebar from './components/Sidebar';
 
 function App() {
   return (
     <div className="App">
-      <Home />
+      <ShipContextProvider>
+        <Sidebar />
+        <Home />
+      </ShipContextProvider>
     </div>
   );
 }

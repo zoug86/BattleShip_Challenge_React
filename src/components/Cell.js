@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
+import { ShipContext } from '../context/ShipContext';
+
 
 import '../styles/Cell.css';
 let countOne = 0;
 let countTwo = 0;
-const Cell = ({ x1, y1, x2, y2, ship, shipOne, shipTwo, name }) => {
-    const [cellClicked, setCellClicked] = useState([]);
-    const [shipOneCellsClicked, setShipOneCellsClicked] = useState(0);
-    const [shipTwoCellsClicked, setShipTwoCellsClicked] = useState(0);
+const Cell = ({ x1, y1, x2, y2, shipOne, shipTwo, name }) => {
+    const { shipOneCellsClicked, setShipOneCellsClicked,
+        shipTwoCellsClicked, setShipTwoCellsClicked, resultOne,
+        setResultOne, resultTwo, setResultTwo } = useContext(ShipContext)
 
-    const handleCellClick = (e) => {
+    const handleCellOneClick = (e) => {
         if (shipOne) {
             if (countOne < 3 && name === 'playerOne') {
-
                 if (Object.values(shipOne).includes(`${x1}${y1}`)) {
                     e.currentTarget.className = 'ship-cell';
                     countOne++;
@@ -20,13 +21,19 @@ const Cell = ({ x1, y1, x2, y2, ship, shipOne, shipTwo, name }) => {
                 } else {
                     e.currentTarget.className = 'miss-cell'
                 }
-            } else {
-                return;
             }
+            setResultOne(true);
+            setResultTwo(false);
         }
+        if (shipTwoCellsClicked === 3 || shipOneCellsClicked === 3) {
+            setResultOne(true);
+            setResultTwo(true);
+            return;
+        }
+    }
+    const handleCellTwoClick = (e) => {
         if (shipTwo) {
             if (countTwo < 3 && name === 'playerTwo') {
-                console.log(e.currentTarget)
                 if (Object.values(shipTwo).includes(`${x2}${y2}`)) {
                     e.currentTarget.className = 'ship-cell';
                     countTwo++;
@@ -35,18 +42,22 @@ const Cell = ({ x1, y1, x2, y2, ship, shipOne, shipTwo, name }) => {
                 } else {
                     e.currentTarget.className = 'miss-cell'
                 }
-                console.log(x2, y2)
-            } else {
-                return;
             }
+            setResultTwo(true);
+            setResultOne(false);
+        }
+        if (shipTwoCellsClicked === 3 || shipOneCellsClicked === 3) {
+            setResultOne(true);
+            setResultTwo(true);
+            return;
         }
     }
-
     return (
-        <div className="cell" onClick={handleCellClick}>
+        <div className="cell" onClick={!resultOne ? handleCellOneClick : !resultTwo ? handleCellTwoClick : ''}>
 
         </div>
     )
+
 }
 
-export default Cell
+export default Cell;
